@@ -1,16 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoginPage } from '../pages/LoginPage';
-//import { DashboardPage } from '../pages/Dashboard';
-//import { PrivateRoute } from './PrivateRoute';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginPage from '../pages/LoginPage';
+import { SignUpPage } from '../pages/SignupPage';
+import { DashboardPage } from '../pages/DashBoardPage';
+import PrivateRoute from '../components/PrivateRoute';  // Asegúrate de tener esta ruta
 
-export const AppRouter = () => {
+const AppRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         
+        {/* Rutas protegidas por PrivateRoute */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
       </Routes>
     </Router>
   );
 };
-//<Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
+
+export default AppRouter;

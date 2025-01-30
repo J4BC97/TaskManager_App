@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import { store } from "./store/store"
-import { AppRouter, PrivateRoute } from './router';
+import { AppRouter } from './router';
 
 export const TaskManagerApp = () => {
   return (

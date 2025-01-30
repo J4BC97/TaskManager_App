@@ -1,32 +1,32 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/auth/authSlice';
-import { useNavigate } from 'react-router-dom';  // Usamos useNavigate para redirigir al Dashboard
-import axios from 'axios';  // Usamos axios para la solicitud al backend
+import { useNavigate } from 'react-router-dom';  // Para la redirección
+import axios from 'axios';  // Para enviar los datos de registro al backend
 
-export const LoginPage = () => {
+export const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();  // Para redirigir al Dashboard
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();  // Para redirigir al dashboard
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
         email,
         password,
       });
       console.log(response.data);
-
-      // Almacenar el token JWT en el localStorage (o en Redux si prefieres)
-      localStorage.setItem('token', response.data.token);
-
-      // Redirigir al dashboard
-      navigate('/dashboard');
+      // Si el registro es exitoso, redirigir al login
+      navigate('/login');
     } catch (error) {
       console.error(error);
-      alert('Credenciales incorrectas');
+      alert("Hubo un error al crear la cuenta. Intenta de nuevo.");
     }
   };
 
@@ -36,7 +36,7 @@ export const LoginPage = () => {
         <div className="col-md-6">
           <div className="card mt-5">
             <div className="card-body">
-              <h5 className="card-title text-center">Login</h5>
+              <h5 className="card-title text-center">Crear Cuenta</h5>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
@@ -60,8 +60,19 @@ export const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="confirmPassword"
+                    placeholder="Confirma tu contraseña"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
                 <button type="submit" className="btn btn-primary btn-block">
-                  Login
+                  Crear Cuenta
                 </button>
               </form>
             </div>
@@ -71,6 +82,3 @@ export const LoginPage = () => {
     </div>
   );
 };
-
-
-
