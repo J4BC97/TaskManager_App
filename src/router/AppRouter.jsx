@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { LoginPage } from '../pages/LoginPage';
-import { SignUpPage } from '../pages/SignupPage';
-import { DashboardPage } from '../pages/DashBoardPage';
+import { LoginPage, SignUpPage, DashboardPage } from '../pages';
 import { PrivateRoute } from './PrivateRoute';  // Asegúrate de tener esta ruta
 
-const AppRouter = () => {
+export const AppRouter = () => {
   return (
     <Router>
       <Routes>
@@ -21,4 +19,3 @@ const AppRouter = () => {
   );
 };
 
-export default AppRouter;
