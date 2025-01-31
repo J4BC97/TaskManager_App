@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
+import { LoginPage } from '../pages/LoginPage';
 import { SignUpPage } from '../pages/SignupPage';
 import { DashboardPage } from '../pages/DashBoardPage';
 import { PrivateRoute } from './PrivateRoute';  // Asegúrate de tener esta ruta

@@ -1,76 +1,62 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authActions } from '../store/auth';
-import { useNavigate } from 'react-router-dom';  // Usamos useNavigate para redirigir al Dashboard
-import axios from 'axios';  // Usamos axios para la solicitud al backend
+import { login } from '../store/auth/authSlice';  // Asegúrate de que la ruta sea correcta
+import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../utils';
 
 export const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();  // Para redirigir al Dashboard
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
-      console.log(response.data);
+      const response = await axiosInstance.post('/auth/login', { email, password });  // Asegúrate de que la URL sea correcta
+      const { token, user } = response.data;
 
-      // Almacenar el token JWT en el localStorage (o en Redux si prefieres)
-      localStorage.setItem('token', response.data.token);
-
-      // Redirigir al dashboard
-      navigate('/dashboard');
+      localStorage.setItem('token', token); // Guarda el token en localStorage
+      dispatch(login(user));  // Despacha la acción de login con el usuario
+      navigate('/dashboard');  // Redirige al usuario al Dashboard después de loguearse
     } catch (error) {
-      console.error(error);
-      alert('Credenciales incorrectas');
+      console.error('Error al iniciar sesión', error);
     }
   };
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card mt-5">
-            <div className="card-body">
-              <h5 className="card-title text-center">Login</h5>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Ingresa tu email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Contraseña</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Ingresa tu contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  Login
-                </button>
-              </form>
-            </div>
-          </div>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
-      </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
     </div>
   );
 };
+
 
 
 

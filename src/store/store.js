@@ -1,9 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { authSlice } from './';
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth/authSlice';  // Asegúrate de que la ruta sea correcta
 
 export const store = configureStore({
-    reducer: {
-        auth: authSlice,
-        //tasks: taskSlice
-    },
+  reducer: {
+    auth: authReducer,  // Asegúrate de que el nombre del reducer sea correcto
+  },
 });
+
+
