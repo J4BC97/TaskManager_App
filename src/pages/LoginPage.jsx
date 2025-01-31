@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/auth/authSlice';  // Asegúrate de que la ruta sea correcta
 import { useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../utils';
+import { axiosInstance } from '../utils';  // Importa axiosInstance
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -14,12 +14,12 @@ export const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth/login', { email, password });  // Asegúrate de que la URL sea correcta
+      const response = await axiosInstance.post('/auth/login', { email, password });  // Solicitud de login
       const { token, user } = response.data;
 
       localStorage.setItem('token', token); // Guarda el token en localStorage
       dispatch(login(user));  // Despacha la acción de login con el usuario
-      navigate('/dashboard');  // Redirige al usuario al Dashboard después de loguearse
+      navigate('/dashboard');  // Redirige al Dashboard después de loguearse
     } catch (error) {
       console.error('Error al iniciar sesión', error);
     }
@@ -56,7 +56,6 @@ export const LoginPage = () => {
     </div>
   );
 };
-
 
 
 
