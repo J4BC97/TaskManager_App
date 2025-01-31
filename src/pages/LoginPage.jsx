@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/auth/authSlice';  // Asegúrate de que la ruta sea correcta
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { axiosInstance } from '../utils';  // Importa axiosInstance
 
 export const LoginPage = () => {
@@ -53,6 +53,11 @@ export const LoginPage = () => {
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
       </form>
+
+      <div className="mt-3">
+        <p>¿No tienes una cuenta? <Link to="/signup">Regístrate aquí</Link></p>
+      </div>
+
     </div>
   );
 };
