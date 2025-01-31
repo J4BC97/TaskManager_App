@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import { SignUpPage } from '../pages/SignupPage';
 import { DashboardPage } from '../pages/DashBoardPage';
-import PrivateRoute from '../components/PrivateRoute';  // Asegúrate de tener esta ruta
+import { PrivateRoute } from './PrivateRoute';  // Asegúrate de tener esta ruta
 
 const AppRouter = () => {
   return (

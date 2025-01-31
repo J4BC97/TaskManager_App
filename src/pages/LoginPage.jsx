@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/auth/authSlice';
+import { authActions } from '../store/auth';
 import { useNavigate } from 'react-router-dom';  // Usamos useNavigate para redirigir al Dashboard
 import axios from 'axios';  // Usamos axios para la solicitud al backend
 
